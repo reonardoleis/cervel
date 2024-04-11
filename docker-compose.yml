@@ -3,12 +3,25 @@ version: "3"
 services:
   nginx:
     image: nginx:latest
+    network_mode: host
     container_name: nginx
-    ports:
-      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ~/projects/frontend_deployments:/var/www/html
-      - ./certs/fullchain.pem:/etc/nginx/ssl/fullchain.pem
-      - ./certs/privkey.pem:/etc/nginx/ssl/privkey.pem
+      - ./certs_wildcard/fullchain.pem:/etc/nginx/ssl/fullchain.pem
+      - ./certs_wildcard/privkey.pem:/etc/nginx/ssl/privkey.pem
     restart: always
+    depends_on:
+      - views
+
+  views:
+    #hostname: views
+    network_mode: host
+    image: views/latest
+    #ports:
+    #  - "3000:3000"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M

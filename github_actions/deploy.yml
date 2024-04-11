@@ -13,6 +13,5 @@ jobs:
       with:
         username: ${{ secrets.SSH_USERNAME }}
         host: ${{ secrets.SSH_HOST }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        # deploy_sh.sh [repository_name] OR deploy_home.sh (deploys my custom links page to server root)
+        password: ${{ secrets.SSH_PASSWORD }})
         script: 'cd ~/projects/cervel/ && ./deploy.sh [repository_name]'
